@@ -15,7 +15,7 @@ Steps
 -----
 
 1. Open Notepad++ > Language > Define your language...
-2. Import > Select mtalua-lang-import.xml (Make sure from now on that the MTA-Lua language is always selected for Lua files.
+2. Import > Select mtalua-lang-import.xml (Make sure from now on that the MTA-Lua language is always selected for Lua files)
 3. Copy MTA-Lua.xml to your Notepad++ directory "Notepad++/plugins/APIs" (Usually in C:/Program Files)
 
 That's basically it, if you have any problems, suggestions or fixes use the topic link below
