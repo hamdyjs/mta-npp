@@ -1,7 +1,7 @@
 MTA Notepad++ - Syntax Highlighting & Auto Completion
 ==============
 
-mta-npp is how you can get Notepad++ syntax highlighting and auto completion for MTA-Lua, with all it's functions and parameters.
+mta-npp allows syntax highlighting and auto completion of MTA & Lua functions, with parameters.
 
 N++ is highly customizable, you can add your own languages with syntax highlighting and auto completion. 
 
