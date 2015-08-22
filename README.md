@@ -5,11 +5,10 @@ mta-npp allows syntax highlighting and auto completion of MTA & Lua functions, w
 
 N++ is highly customizable, you can add your own languages with syntax highlighting and auto completion. 
 
-There are currently three files in the repo:
+There are currently two files in the repo that are meant to the users:
 
 - mtalua-lang-import.xml > The file to import in the user defined language page to get the syntax highlighting
 - MTA-Lua.xml > The auto completion file
-- functions.txt > This is a file used to get the arguments, it's useless for you
 
 Steps
 -----
