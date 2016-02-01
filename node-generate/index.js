@@ -1,8 +1,19 @@
 var http = require('http'),
 	fs = require('fs'),
 	s = require('string'),
-	async = require('async');
+	async = require('async'),
+	parseXML = require('xml2js').parseString;
 
+if (!String.prototype.encodeHTML) {
+  String.prototype.encodeHTML = function () {
+    return this.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&apos;');
+  };
+}
+	
 var functions_file_path = process.argv[2];
 if (!functions_file_path) { console.log("You must specify a raw functions txt file"); return; }
 
@@ -11,12 +22,21 @@ console.log('Running');
 var prefix = '<NotepadPlus>\n\t<AutoComplete language="MTA-Lua">\n\t<Environment startFunc="(" endFunc=")" paramSeparator="," terminal=";" additionalWordChar = "."/>';
 var suffix = '\n\t</AutoComplete>\n</NotepadPlus>';
 
+var lines = [];
 var ac_file = fs.openSync('MTA-Lua.xml', 'w');
 fs.writeSync(ac_file, prefix);
 console.log('Reading raw functions file');
 var functions = fs.readFileSync(functions_file_path, 'utf8');
 if (!functions) { console.log("Functions file not found"); return; }
-var lines = functions.split(/(?:\n|\r\n|\r)/g);
+parseXML(functions, function (err, result) {
+    
+	for ( i=19; i<22; i++ ) {
+	
+		lines = lines.concat(result.NotepadPlus.UserLang[0].KeywordLists[0].Keywords[i]._.split(' '));
+	
+	}
+	
+});
 
 // var functions_file = fs.openSync('functions.txt', 'w');
 
@@ -44,7 +64,7 @@ async.mapSeries(lines, function(item, callback) {
 		var syntax = function_data.syntax, name = function_data.name;
 		// fs.writeSync(functions_file, syntax + '\r\n');
 		var args = syntax.between('(', ')').trim().collapseWhitespace().split(',');
-		args.forEach(function(arg, i) { args[i] = s(arg).trim().s; });
+		args.forEach(function(arg, i) { args[i] = s(arg).trim().s.encodeHTML(); });
 		var retval = syntax.left(syntax.indexOf(' '));
 		var ac_data = '\n\t\t<KeyWord name="' + name + '" func="yes">';
 		ac_data += '\n\t\t\t<Overload retVal="' + retval + '">';
